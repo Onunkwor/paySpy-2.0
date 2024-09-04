@@ -1,22 +1,51 @@
 import { OnBoarding } from "@/components/Authentication/onBoarding/onBoarding";
+import { AuthProvider } from "@/context/AuthProvider";
 import { OnBoardingProvider } from "@/context/OnBoarding.Provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { HideAuthRoute, ProtectedRoutes } from "./ProtectedRoutes";
+import Home from "@/pages/Home";
+import Login from "@/components/Authentication/Login/Login";
+import { LoginProvider } from "@/context/Login.Provider";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
     {
+      path: "/",
+      element: (
+        <ProtectedRoutes>
+          <Home />
+        </ProtectedRoutes>
+      ),
+    },
+    {
       path: "/signup",
-      element: <OnBoarding />,
+      element: (
+        <HideAuthRoute>
+          <OnBoarding />
+        </HideAuthRoute>
+      ),
+    },
+    {
+      path: "/login",
+      element: (
+        <HideAuthRoute>
+          <Login />
+        </HideAuthRoute>
+      ),
     },
   ]);
 
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <OnBoardingProvider>
-        <RouterProvider router={router} />
-      </OnBoardingProvider>
+      <AuthProvider>
+        <LoginProvider>
+          <OnBoardingProvider>
+            <RouterProvider router={router} />
+          </OnBoardingProvider>
+        </LoginProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };

@@ -1,12 +1,11 @@
-import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { multiStepForm } from "@/helpers/multiform";
-import { useOnboardContext } from "@/context/OnBoarding.Provider";
-import { Label } from "@/components/ui/label";
+import { OnboardData, useOnboardContext } from "@/context/OnBoarding.Provider";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { SERVER_BASE_URL } from "@/config";
 
 export const StepOne = () => {
   const { handleInputChange, onboardData } = useOnboardContext();
@@ -155,9 +154,35 @@ export const OnBoarding = () => {
     steps,
   } = multiStepForm([<StepOne />, <StepTwo />, <StepThree />]);
   const { onboardData } = useOnboardContext();
-
-  const handleSubmit = (e: any) => {
+  const { mutate: onboardMutation, isPending }: any = useMutation({
+    mutationFn: (data: OnboardData) =>
+      axios.post(
+        `${SERVER_BASE_URL}/api/auth/signup`,
+        {
+          ...data,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ),
+    mutationKey: ["onboard"],
+    onError: (error: any) => {
+      toast.error(error.response?.data?.msg || error.message);
+    },
+    onSuccess: (data) => {
+      toast.success(data.data.msg);
+      navigate("/");
+    },
+  });
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (onboardData.password !== onboardData.confirmPassword) {
+      toast.error("Please enter correct password");
+      return;
+    }
+    await onboardMutation({ ...onboardData });
   };
   return (
     <>
@@ -188,7 +213,7 @@ export const OnBoarding = () => {
               )}
               {!canMoveForward && (
                 <Button onClick={next} type="submit">
-                  Register
+                  {isPending ? "Loading" : "Register"}
                 </Button>
               )}
             </div>
