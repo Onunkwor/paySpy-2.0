@@ -23,6 +23,7 @@ import PriceInfoCard from "@/components/shared/PriceInfoCard";
 import ProductCard from "@/components/shared/ProductCard";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import Loader from "@/components/shared/Loader";
 
 const ProductDetails = () => {
   const { id } = useParams(); // Retrieve product id from the URL
@@ -93,13 +94,41 @@ const ProductDetails = () => {
     }
   }, [id, refetch]);
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending)
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <div className="loader">
+          <Loader />
+        </div>
+      </div>
+    );
   if (error) return <div>Error loading product details.</div>;
   const handleDelete = async () => {
     await deleteProduct({ id });
   };
   const product = data.data.data;
   const allProducts = getAllData?.data.data;
+  const priceHistoryExists =
+    product.priceHistory && product.priceHistory.length > 0;
+
+  const lowestPriceArr = priceHistoryExists
+    ? product.priceHistory.map(({ currentPrice }: any) =>
+        parseFloat(currentPrice)
+      )
+    : [parseFloat(product.currentPrice)];
+
+  const lowestPrice = Math.min(...lowestPriceArr).toFixed(2);
+  const highestPrice = Math.max(...lowestPriceArr).toFixed(2);
+
+  const averagePrice = priceHistoryExists
+    ? (
+        product.priceHistory
+          .map(({ currentPrice }: any) => parseFloat(currentPrice))
+          .reduce((acc: any, item: any) => item + acc, 0) /
+        product.priceHistory.length
+      ).toFixed(2)
+    : parseFloat(product.currentPrice).toFixed(2); // Fix average price to two decimal places
+
   return (
     <div>
       <p className="bg-red-300 w-full h-30px p-2 text-sm text-black text-center flex justify-center items-center gap-x-2">
@@ -179,7 +208,7 @@ const ProductDetails = () => {
                 </p>
                 <p className="text-[21px] text-secondary opacity-50 line-through">
                   {product.currency === "USD" && "$"}
-                  {product.currentPrice}
+                  {highestPrice}
                 </p>
               </div>
               <div className="flex flex-col gap-4">
@@ -204,6 +233,9 @@ const ProductDetails = () => {
                   of buyers have recommended this.
                 </p>
               </div>
+              <p className="text-xs font-bold opacity-50">
+                You'll be sent an email when the price drops
+              </p>
             </div>
             <div className="my-7 flex flex-col gap-5">
               <div className="gap-5 flex flex-wrap">
@@ -218,25 +250,19 @@ const ProductDetails = () => {
                 <PriceInfoCard
                   title="Average Price"
                   iconSrc={chart}
-                  value={`${product.currency === "USD" && "$"} ${
-                    product.currentPrice
-                  }`}
+                  value={`${product.currency === "USD" && "$"} ${averagePrice}`}
                   borderColor="#b6dbff"
                 />
                 <PriceInfoCard
                   title="Highest Price"
                   iconSrc={arrowUp}
-                  value={`${product.currency === "USD" && "$"} ${
-                    product.currentPrice
-                  }`}
+                  value={`${product.currency === "USD" && "$"} ${highestPrice}`}
                   borderColor="#b6dbff"
                 />
                 <PriceInfoCard
                   title="Lowest Price"
                   iconSrc={arrowDown}
-                  value={`${product.currency === "USD" && "$"} ${
-                    product.currentPrice
-                  }`}
+                  value={`${product.currency === "USD" && "$"} ${lowestPrice}`}
                   borderColor="#b6dbff"
                 />
               </div>

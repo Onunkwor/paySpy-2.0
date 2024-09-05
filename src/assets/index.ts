@@ -10,7 +10,7 @@ import star from "./icons/star.svg";
 import arrowUp from "./icons/arrow-up.svg";
 import chart from "./icons/chart.svg";
 import priceTag from "./icons/price-tag.svg";
-import favicon from "./icons/favicon.ico";
+import loader from "./icons/loader.svg";
 export {
   arrowDown,
   arrowRight,
@@ -24,5 +24,5 @@ export {
   arrowUp,
   chart,
   priceTag,
-  favicon,
+  loader,
 };
