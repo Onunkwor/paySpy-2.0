@@ -134,17 +134,6 @@ export const StepThree = () => {
 export const OnBoarding = () => {
   const navigate = useNavigate();
 
-  const stepsHeader = [
-    {
-      text: "Basic info",
-    },
-    {
-      text: "Personal details",
-    },
-    {
-      text: "Account security",
-    },
-  ];
   const {
     currentStepIndex,
     next,
