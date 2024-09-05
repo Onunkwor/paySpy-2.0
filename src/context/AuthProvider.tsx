@@ -48,6 +48,7 @@ export const AuthProvider = ({
     }
   };
   const [accessToken, tokenDispatch] = useReducer(authReducer, null);
+
   const { refetch, isPending, data }: any = useQuery({
     queryFn: () =>
       new ApiRequest(`${SERVER_BASE_URL}/api/auth/refresh`, "post").apiRequest(

@@ -201,18 +201,30 @@ export const OnBoarding = () => {
             </div>
             <div className="w-full  flex justify-between ">
               {canMoveBackward && (
-                <Button onClick={previous} type="button">
+                <Button
+                  onClick={previous}
+                  type="button"
+                  className="bg-secondary text-white hover:bg-secondary hover:text-white"
+                >
                   Back
                 </Button>
               )}
 
               {canMoveForward && (
-                <Button onClick={next} type="button">
+                <Button
+                  onClick={next}
+                  type="button"
+                  className="bg-secondary text-white hover:bg-secondary hover:text-white"
+                >
                   Next
                 </Button>
               )}
               {!canMoveForward && (
-                <Button onClick={next} type="submit">
+                <Button
+                  onClick={next}
+                  type="submit"
+                  className="bg-secondary text-white hover:bg-secondary hover:text-white"
+                >
                   {isPending ? "Loading" : "Register"}
                 </Button>
               )}

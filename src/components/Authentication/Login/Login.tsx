@@ -32,7 +32,7 @@ const Login = () => {
   });
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    loginMutation({ ...loginData });
+    await loginMutation({ ...loginData });
   };
 
   return (
