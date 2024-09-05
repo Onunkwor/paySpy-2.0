@@ -186,17 +186,17 @@ export const OnBoarding = () => {
   };
   return (
     <>
-      <div className="w-screen flex flex-col items-center">
+      <div className="w-screen flex flex-col items-center h-screen">
         <form
-          className="flex flex-col items-center p-10 rounded-sm"
+          className="flex flex-col items-center p-10 rounded-sm h-full justify-center"
           onSubmit={handleSubmit}
         >
-          <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">
+          <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900 text-center">
             Register
           </h3>
 
-          <div className="w-full flex flex-col gap-2 mt-5 items-center justify-center">
-            <div className="flex items-center flex-col ">
+          <div className="w-full flex flex-col gap-2 mt-5 ">
+            <div className="flex items-center flex-col  justify-center h-full">
               {steps[currentStepIndex]}
             </div>
             <div className="w-full  flex justify-between ">

@@ -7,6 +7,7 @@ import { HideAuthRoute, ProtectedRoutes } from "./ProtectedRoutes";
 import Home from "@/pages/Home";
 import Login from "@/components/Authentication/Login/Login";
 import { LoginProvider } from "@/context/Login.Provider";
+import ProductDetails from "@/pages/ProductDetails";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -15,6 +16,14 @@ export const AppRouter = () => {
       element: (
         <ProtectedRoutes>
           <Home />
+        </ProtectedRoutes>
+      ),
+    },
+    {
+      path: "/products/:id",
+      element: (
+        <ProtectedRoutes>
+          <ProductDetails />
         </ProtectedRoutes>
       ),
     },

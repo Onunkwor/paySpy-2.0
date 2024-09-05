@@ -37,7 +37,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="w-full h-full flex flex-col mx-auto bg-white rounded-lg pt-12 overflow-hidden">
+      <div className="w-full h-screen flex flex-col mx-auto bg-white rounded-lg pt-12 overflow-hidden justify-center">
         <div className="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
           <div className="flex items-center justify-center w-full lg:p-12">
             <div className="flex items-center xl:p-10 rounded-sm">
@@ -52,11 +52,6 @@ const Login = () => {
                   Enter your email and password
                 </p>
 
-                <div className="flex items-center mb-3">
-                  <hr className="h-0 border-b border-solid border-grey-500 grow" />
-                  <p className="mx-4 text-grey-600">or</p>
-                  <hr className="h-0 border-b border-solid border-grey-500 grow" />
-                </div>
                 <label className="mb-2 text-sm text-start text-grey-900">
                   Email*
                 </label>
