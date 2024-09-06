@@ -86,9 +86,13 @@ const Home = () => {
               <span className="text-primary">PriceSpy</span>
             </h1>
             <p className="mt-6">
-              Powerful, self-serve product and growth analytics to help you
-              convert, engage, and retain more.
+              Track prices with ease! Our application scrapes data from Amazon
+              to monitor your favorite products in real-time. When the price of
+              an item drops, you'll receive periodic email alerts, helping you
+              snag the best deals without constantly checking prices. Maximize
+              savings effortlessly!
             </p>
+
             <div className="flex items-center gap-x-4">
               <Input
                 placeholder="Enter amazon product link"
